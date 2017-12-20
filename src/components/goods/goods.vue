@@ -2,7 +2,8 @@
   <div class="goods">
     <div class="menu-wrapper" ref="menuWrapper">
       <ul>
-        <li v-for="(item,index) in goods" class="menu-item" :class="{'current':currentIndex===index}">
+        <li v-for="(item,index) in goods" class="menu-item" :class="{'current':currentIndex===index}"
+            @click="selectMenu(index)">
           <span class="text">
             <span v-show="item.type>0" class="icon" :class="classMap[item.type]"></span>{{item.name}}
           </span>
@@ -73,16 +74,22 @@
         response = response.body
         if (response.errno === ERR_OK) {
           this.goods = response.data
+          this.$nextTick(() => {
+            this._calculateHeight()
+          })
         }
       })
     },
     mounted() {
-      this._initScroll()
-      this._calculateHight()
+      this.$nextTick(() => {
+        this._initScroll()
+      })
     },
     methods: {
       _initScroll() {
-        this.menuScroll = new BScroll(this.$refs.menuWrapper, {})
+        this.menuScroll = new BScroll(this.$refs.menuWrapper, {
+          click: true
+        })
         this.foodsScroll = new BScroll(this.$refs.foodsWrapper, {
           probeType: 3
         })
@@ -90,7 +97,7 @@
           this.scrollY = Math.abs(Math.round(pos.y))
         })
       },
-      _calculateHight() {
+      _calculateHeight() {
         let foodList = this.$refs.foodsWrapper.getElementsByClassName('food-list-hook')
         let height = 0
         this.listHeight.push(height)
@@ -99,6 +106,11 @@
           height += item.clientHeight
           this.listHeight.push(height)
         }
+      },
+      selectMenu(index) {
+        let foodList = this.$refs.foodsWrapper.getElementsByClassName('food-list-hook')
+        let el = foodList[index]
+        this.foodsScroll.scrollToElement(el, 300)
       }
     }
   }
@@ -127,7 +139,7 @@
           position: relative
           z-index: 10
           margin-top: -1px
-          background:#fff
+          background: #fff
           font-weight: 700
           .text
             border-none()
