@@ -1,8 +1,10 @@
 <template>
   <div class="cartcontrol">
-    <div class="cart-decrease" v-show="food.count>0" @click="decreaseCart">
-      <span class="inner icon-remove_circle_outline"></span>
-    </div>
+    <transition name="move">
+      <div class="cart-decrease" v-show="food.count>0" @click="decreaseCart">
+        <span class="inner icon-remove_circle_outline"></span>
+      </div>
+    </transition>
     <div class="cart-count" v-show="food.count>0">{{food.count}}</div>
     <div class="cart-add icon-add_circle" @click="addCart"></div>
   </div>
@@ -41,7 +43,7 @@
       display: inline-block
       font-size: 24px
       .inner
-        display:inline-block
+        display: inline-block
         line-height: 24px
         padding: 6px
         color: rgb(0, 160, 220)
@@ -60,4 +62,9 @@
       line-height: 24px
       padding: 6px
       color: rgb(0, 160, 220)
+  .move-enter,.move-leave-to
+    opacity: 0
+    transform:translate3D(24px,0,0)  rotate(180deg)
+  .move-enter-active,.move-leave-active
+    transition: all 0.3s linear
 </style>
