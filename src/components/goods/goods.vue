@@ -39,7 +39,7 @@
         </li>
       </ul>
     </div>
-    <shopcart :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
+    <shopcart :select-foods="selectFoods" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
   </div>
 </template>
 
@@ -76,6 +76,17 @@
           }
         }
         return 0
+      },
+      selectFoods() {
+        let foods = []
+        this.goods.forEach((good) => {
+          good.foods.forEach((food) => {
+            if (food.count) {
+              foods.push(food)
+            }
+          })
+        })
+        return foods
       }
     },
     created() {
@@ -101,7 +112,8 @@
           click: true
         })
         this.foodsScroll = new BScroll(this.$refs.foodsWrapper, {
-          probeType: 3
+          probeType: 3,
+          click: true
         })
         this.foodsScroll.on('scroll', (pos) => {
           this.scrollY = Math.abs(Math.round(pos.y))
@@ -190,6 +202,7 @@
         display: flex
         margin: 18px
         padding-bottom: 18px
+        border-1px-2(rgba(7, 17, 27, 0.1))
         &:last-child
           margin-bottom: 0
         .icon
@@ -224,6 +237,10 @@
               text-decoration: line-through
               font-size: 10px
               color: rgb(147, 153, 159)
+          .cartcontrol-wrapper
+            position: absolute
+            right: 0
+            bottom: 12px
 
 
 </style>
