@@ -15,6 +15,11 @@
         <div class="pay" :class="payClass">{{payDesc}}</div>
       </div>
     </div>
+    <div class="ball-container">
+      <div v-for="ball in balls" v-show="ball.show" class="ball">
+        <div class="inner"></div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -37,6 +42,19 @@
       minPrice: {
         type: Number,
         default: 0
+      }
+    },
+    data() {
+      return {
+        balls: [{
+          show: false
+        }, {
+          show: false
+        }, {
+          show: false
+        }, {
+          show: false
+        }]
       }
     },
     computed: {
@@ -172,4 +190,17 @@
             color: #fff
 
 
+    .ball-container
+      .ball
+        position: fixed
+        left: 32px
+        bottom: 22px
+        z-index: 200
+        .inner
+          width: 16px
+          height: 16px
+          -webkit-border-radius: 50%
+          -moz-border-radius: 50%
+          border-radius: 50%
+          background: rgb(0, 160, 220)
 </style>

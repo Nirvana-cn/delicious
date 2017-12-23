@@ -26,6 +26,7 @@
         } else {
           this.food.count++
         }
+        this.$dispatch('cart.add', event.target)
       },
       decreaseCart() {
         if (this.food.count) {
@@ -62,9 +63,11 @@
       line-height: 24px
       padding: 6px
       color: rgb(0, 160, 220)
-  .move-enter,.move-leave-to
+
+  .move-enter, .move-leave-to
     opacity: 0
-    transform:translate3D(24px,0,0)  rotate(180deg)
-  .move-enter-active,.move-leave-active
+    transform: translate3D(24px, 0, 0) rotate(180deg)
+
+  .move-enter-active, .move-leave-active
     transition: all 0.3s linear
 </style>
