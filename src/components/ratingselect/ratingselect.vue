@@ -1,15 +1,15 @@
 <template>
   <div class="ratingselect">
     <div class="rating-type">
-      <span class="block positive" :class="{'active':selectType===2}" @click="select(2)">{{desc.all}}<span
+      <span class="block positive" :class="{'active':selectTypeIn===2}" @click="select(2)">{{desc.all}}<span
         class="count">{{ratings.length}}</span></span>
-      <span class="block positive" :class="{'active':selectType===0}" @click="select(0)">{{desc.positive}}<span
+      <span class="block positive" :class="{'active':selectTypeIn===0}" @click="select(0)">{{desc.positive}}<span
         class="count">{{positives.length}}</span></span>
-      <span class="block negative" :class="{'active':selectType===1}" @click="select(1)">{{desc.negative}}<span
+      <span class="block negative" :class="{'active':selectTypeIn===1}" @click="select(1)">{{desc.negative}}<span
         class="count">{{negatives.length}}</span></span>
     </div>
     <div class="switch" @click="toggleContent">
-      <span class="icon-check_circle" :class="{'active':onlyContent===true}"></span>
+      <span class="icon-check_circle" :class="{'active':onlyContentIn===true}"></span>
       <span class="text">只看有内容的评价</span>
     </div>
   </div>
@@ -34,7 +34,7 @@
       },
       onlyContent: {
         type: Boolean,
-        default: false
+        default: true
       },
       desc: {
         type: Object,
@@ -45,6 +45,12 @@
             negative: '不满意'
           }
         }
+      }
+    },
+    data() {
+      return {
+        selectTypeIn: this.selectType,
+        onlyContentIn: this.onlyContent
       }
     },
     computed: {
@@ -61,12 +67,10 @@
     },
     methods: {
       select(type, event) {
-        this.selectType = type
-        this.$emit('ratingtype.select', type)
+        this.selectTypeIn = type
       },
       toggleContent(event) {
-        this.onlyContent = !this.onlyContent
-        this.$emit('ratingtype.select', this.onlyContent)
+        this.onlyContentIn = !this.onlyContent
       }
     }
   }

@@ -75,13 +75,13 @@
     methods: {
       show() {
         this.showFlag = true
-        this.selectType = ALL
-        this.onlyContent = false
-        this.desc = {
-          all: '全部',
-          positive: '推荐',
-          negative: '吐槽'
-        }
+//        this.selectType = ALL
+//        this.onlyContent = false
+//        this.desc = {
+//          all: '全部',
+//          positive: '推荐',
+//          negative: '吐槽'
+//        }
         this.$nextTick(() => {
           if (!this.scroll) {
             this.scroll = new BScroll(this.$refs.foodDetail, {
