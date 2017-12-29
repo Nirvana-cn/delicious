@@ -28,6 +28,11 @@
           <h1 class="title">商品信息</h1>
           <p class="text">{{food.info}}</p>
         </div>
+        <split></split>
+        <div class="rating">
+          <h1 class="title">商品评价</h1>
+          <ratingselect :select-type="selectType" :only-content="onlyContent" :desc="desc" :ratings="food.ratings"></ratingselect>
+        </div>
       </div>
     </div>
   </transition>
@@ -37,7 +42,12 @@
   import BScroll from 'better-scroll'
   import cartcontrol from '../cartcontrol/cartcontrol.vue'
   import split from '../split/split.vue'
+  import ratingselect from '../ratingselect/ratingselect.vue'
   import Vue from 'vue'
+
+  const ALL = 2
+  //  const NEGATIVE = 1
+  //  const POSITIVE = 0
 
   export default {
     props: {
@@ -47,19 +57,34 @@
     },
     components: {
       cartcontrol,
-      split
+      split,
+      ratingselect
     },
     data() {
       return {
-        showFlag: false
+        showFlag: false,
+        selectType: ALL,
+        onlyContent: true,
+        desc: {
+          all: '全部',
+          positive: '推荐',
+          negative: '吐槽'
+        }
       }
     },
     methods: {
       show() {
         this.showFlag = true
+        this.selectType = ALL
+        this.onlyContent = false
+        this.desc = {
+          all: '全部',
+          positive: '推荐',
+          negative: '吐槽'
+        }
         this.$nextTick(() => {
           if (!this.scroll) {
-            this.scroll = new BScroll(this.refs.foodDetail, {
+            this.scroll = new BScroll(this.$refs.foodDetail, {
               click: true
             })
           } else {
@@ -168,7 +193,14 @@
         font-size: 12px
         line-height: 24px
         padding: 0 8px
-        color:rgb(77,85,93)
+        color: rgb(77, 85, 93)
+    .rating
+      padding-top: 18px
+      .title
+        line-height: 14px
+        margin-left: 18px
+        font-size: 14px
+        color: rgb(7, 17, 27)
 
   .move-enter, .move-leave-to
     transform: translate3d(100%, 0, 0)
