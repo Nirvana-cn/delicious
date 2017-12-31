@@ -32,7 +32,8 @@
         <div class="rating">
           <h1 class="title">商品评价</h1>
           <ratingselect :select-type="selectType" :only-content="onlyContent" :desc="desc"
-                        :ratings="food.ratings"></ratingselect>
+                        :ratings="food.ratings" v-on:changeSelectType="changeSelectType"
+                        v-on:changeOnlyContent="changeOnlyContent"></ratingselect>
           <div class="rating-wrapper">
             <ul v-show="food.ratings && food.ratings.length">
               <li v-show="needShow(rating.rateType,rating.text)" v-for="rating in food.ratings" class="rating-item">
@@ -82,7 +83,7 @@
       return {
         showFlag: false,
         selectType: ALL,
-        onlyContent: true,
+        onlyContent: false,
         desc: {
           all: '全部',
           positive: '推荐',
@@ -99,13 +100,6 @@
     methods: {
       show() {
         this.showFlag = true
-//        this.selectType = ALL
-//        this.onlyContent = false
-//        this.desc = {
-//          all: '全部',
-//          positive: '推荐',
-//          negative: '吐槽'
-//        }
         this.$nextTick(() => {
           if (!this.scroll) {
             this.scroll = new BScroll(this.$refs.foodDetail, {
@@ -131,6 +125,12 @@
         } else {
           return type === this.selectType
         }
+      },
+      changeSelectType(type) {
+        this.selectType = type
+      },
+      changeOnlyContent(type) {
+        this.onlyContent = type
       }
     }
   }

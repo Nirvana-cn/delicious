@@ -68,9 +68,11 @@
     methods: {
       select(type, event) {
         this.selectTypeIn = type
+        this.$emit('changeSelectType', type)
       },
       toggleContent(event) {
         this.onlyContentIn = !this.onlyContentIn
+        this.$emit('changeOnlyContent', this.onlyContentIn)
       }
     }
   }
