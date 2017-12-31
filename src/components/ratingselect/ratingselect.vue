@@ -70,7 +70,7 @@
         this.selectTypeIn = type
       },
       toggleContent(event) {
-        this.onlyContentIn = !this.onlyContent
+        this.onlyContentIn = !this.onlyContentIn
       }
     }
   }
