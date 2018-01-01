@@ -6,24 +6,32 @@
       <router-link to="/ratings">评价</router-link>
       <router-link to="/seller">商家</router-link>
     </div>
-    <router-view :seller="seller"></router-view>
+    <keep-alive>
+      <router-view :seller="seller"></router-view>
+    </keep-alive>
   </div>
 </template>
 
 <script>
   import header from './components/header/header.vue'
+  import {urlParse} from './common/js/util'
 
   export default {
     data() {
       return {
-        seller: {}
+        seller: {
+          id: (() => {
+            let queryParam = urlParse()
+            return queryParam.id
+          })()
+        }
       }
     },
     created() {
       this.$http.get('/api/seller').then((response) => {
         response = response.body
         if (response.errno === 0) {
-          this.seller = response.data
+          this.seller = Object.assign({}, this.seller, response.data)
         }
       })
     },
@@ -43,7 +51,7 @@
   }
 
   .tab a {
-    flex:1 1 10%;
+    flex: 1 1 10%;
     text-align: center;
   }
 
