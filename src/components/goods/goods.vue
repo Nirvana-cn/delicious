@@ -101,14 +101,10 @@
         if (response.errno === ERR_OK) {
           this.goods = response.data
           this.$nextTick(() => {
+            this._initScroll()
             this._calculateHeight()
           })
         }
-      })
-    },
-    mounted() {
-      this.$nextTick(() => {
-        this._initScroll()
       })
     },
     methods: {
